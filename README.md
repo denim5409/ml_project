@@ -25,3 +25,24 @@
 
 ### (3) 참고
 - 모든 데이터는 [구글 클라우드 빅쿼리](https://cloud.google.com/bigquery)에 적재하였고, 아래와 같이 불러와서 머신러닝 프로젝트를 수행하였음
+
+```python
+import pandas
+
+project_id = 'cardproject-283503'
+client = bigquery.Client(project=project_id)
+
+train = client.query('''
+  SELECT 
+      * 
+  FROM `cardproject-283503.jeju_data_ver1.201901_202003_train` 
+  WHERE RAND() < 10000 / (SELECT COUNT(*) FROM `cardproject-283503.jeju_data_ver1.201901_202003_train`)
+  ''').to_dataframe()
+```
+
+## 3. 개발 스펙
+### (1) OS 환경
+- OS 환경 : Linux, jupyter, Google Colab
+
+### (2) Python 버전, 패키지 버전
+- Python 버전 : 3.6.9
